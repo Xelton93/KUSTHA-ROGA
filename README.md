@@ -2,7 +2,7 @@
 
 An open, structured database of **Kushtha Roga** (classical Ayurvedic skin disorders): classification, nidana (etiology), samprapti (pathogenesis), lakshana (clinical features), upashaya, chikitsa (management), and tentative modern-dermatology correlations, each tied to classical source references.
 
-> **Status: v0.1 (draft).** The seed data lists the 18 classical types with placeholder fields. Every record carries a `verification_status` and must be checked against the primary text before being cited. Nothing here is clinical advice.
+> **Status: v0.2 (draft).** The seed data lists the 18 classical types with placeholder fields. Every record carries a `verification_status` and must be checked against the primary text before being cited. Nothing here is clinical advice.
 
 ## Why this exists
 
@@ -14,6 +14,13 @@ Classical descriptions of Kushtha are scattered across Samhitas and commentaries
 data/
   kushtha_types.csv      # Maha (7) and Kshudra (11) Kushtha, one row per type
   references.csv         # Source texts, chapters, editions, commentaries
+  studies.csv            # Source studies (S01, S02): design, sample, site, instrument
+  literature/            # Literature-review data, one folder per source study
+    s01_psoriasis_kustha/
+    s02_skin_lesions/
+  observations/          # Aggregate observational data, one folder per source study
+    s01_psoriasis_survey_n200/
+    s02_skin_lesion_database_n102/
 schema/
   kushtha_schema.json    # JSON Schema for a Kushtha record
 scripts/
@@ -24,6 +31,17 @@ CONTRIBUTING.md
 CITATION.cff
 LICENSE
 ```
+
+## Literature review and observation data (v0.2)
+
+Two MD theses from the National Institute of Ayurveda, Jaipur, are the first sources (`data/studies.csv`):
+
+| ID | Study | Literature review | Observations |
+|---|---|---|---|
+| S01 | Psoriasis and Kustha Roga | classification by Acharya, lakshana, nidana, purvarupa, samprapti, sadhyasadhyata, chikitsa, modern psoriasis review | Survey of 200 psoriasis patients: demographics, PASI, psoriasis type vs Kustha bheda, statistical tests |
+| S02 | Skin lesions in context of Kustha Roga | skin layers, Maha vs Kshudra, classifications, purvarupa, samprapti, lesion morphology | Photographic database of 102 patients: per-type lesion features, Dosha Amshamsha Vikalpa, modern correlations, sample statistics |
+
+Each folder has its own `README.md` listing files, columns and caveats. All rows carry a `source_table` or `source_section` reference and are paraphrased extractions that **still need review against the originals**. Contradictions inside a source are kept and flagged in `notes`, not silently corrected. Only aggregate data is included: no patient identifiers, per-patient rows or photographs.
 
 ## Classification (Charaka Samhita, Chikitsa Sthana 7)
 
@@ -40,6 +58,8 @@ python3 scripts/validate.py
 
 ## Roadmap
 
+- [x] Import literature review and observation data from S01 and S02 (v0.2)
+- [ ] Reconcile S01/S02 correlations with each other and with Charaka/Sushruta primary verses
 - [ ] Verify all 18 records against Charaka, Sushruta, and Ashtanga Hridaya (verse-level references)
 - [ ] Add nidana, samprapti ghataka, and sadhyasadhyatva fields
 - [ ] Add chikitsa: shodhana, shamana formulations, pathya-apathya
